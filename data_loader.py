@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from model_classes import *
 
 # read in materials, member properties, etc from excel
