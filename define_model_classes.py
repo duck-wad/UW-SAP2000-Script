@@ -48,7 +48,7 @@ class FrameMember:
 @dataclass 
 class LoadPattern:
     name: str
-    type: LoadType # see LoadType
+    type: LoadType # see LoadType in model_enums
     self_weight: int 
     add_load_case: bool # if true, linear static load case is added
 
