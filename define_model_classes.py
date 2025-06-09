@@ -18,21 +18,40 @@ class MaterialProperty:
 @dataclass
 class SectionProperty:
     name: str
-    material: str
+    material: MaterialProperty
+
+# inherit from SectionProperty
+@dataclass
+class BoxProperty(SectionProperty):
     depth: float 
     width: float
+    flange_thickness: float
+    web_thickness: float
+    corner_radius: float
+
+@dataclass
+class PipeProperty(SectionProperty):
+    diameter: float
+    thickness: float
+
+@dataclass
+class AngleProperty(SectionProperty):
+    pass
+
 
 @dataclass
 class FrameMember:
     name: str
     start: Tuple[float, float, float]  # (x, y, z) coordinate
     end: Tuple[float, float, float]    # (x, y, z) coordinate
-    section: str # string section property name
-    coordinate_system: str
+    section: SectionProperty # string section property name
+    coordinate_system: str # ex. 'Global'
     start_restraint: Optional[Tuple[bool, bool, bool, bool, bool, bool]] = None # 6DOF restraint
     end_restraint: Optional[Tuple[bool, bool, bool, bool, bool, bool]] = None # 6DOF restraint
-    point_loads: List["PointLoad"] = field(default_factory=list)
-    distributed_loads: List["DistributedLoad"] = field(default_factory=list)
+    start_release: Optional[Tuple[bool, bool, bool, bool, bool, bool]] = None
+    end_release: Optional[Tuple[bool, bool, bool, bool, bool, bool]] = None
+    point_loads: Optional[List["PointLoad"]] = None
+    distributed_loads: Optional[List["DistributedLoad"]] = None
 
     # enforce expected structure
     def __post_init__(self):
