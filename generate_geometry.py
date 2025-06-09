@@ -5,7 +5,7 @@ import numpy as np
 # example function
 def generate_stringer(length, num_segments):
     # based on the length of the stringer and probably some other factors, segment the stringer into N segments
-    # the return might be an array of 3D points, like [[x1, y1, z1], [x2, y2, z2], etc]
+    # the return might be an array of 3D point Tuples, like [(x1, y1, z1), (x2, y2, z2), etc]
 
     # simple example
     segment_length = length / num_segments
@@ -15,11 +15,6 @@ def generate_stringer(length, num_segments):
     z_pos = 5.0
     points = []
     for i in range(num_segments+1):
-        points.append([x_pos, y_pos, z_pos])
+        points.append((x_pos, y_pos, z_pos))
         x_pos += segment_length
     return points
-
-length = 20
-num_segments = 5
-stringer_points = generate_stringer(length, num_segments)
-print(stringer_points)
