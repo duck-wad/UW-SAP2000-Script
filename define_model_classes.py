@@ -6,38 +6,61 @@ from model_enums import *
 
 ''' ------------------------- DATA CLASSES ------------------------- '''
 
-
-@dataclass
+# maybe don't need this since SAP default has A992Fy50
+""" @dataclass
 class MaterialProperty:
     name: str 
     type: MaterialType # 1=steel, 2=concrete, 3=nodesign, 4=aluminum, 5=coldform, 6=rebar, 7=tendon
     elastic_mod: float
     poisson: float
-    thermal_coeff: float
+    thermal_coeff: float """
 
 @dataclass
 class SectionProperty:
     name: str
-    material: MaterialProperty
+    material: str
 
 # inherit from SectionProperty
+# Hollow steel section tube
 @dataclass
-class BoxProperty(SectionProperty):
+class HSSTProperty(SectionProperty):
     depth: float 
     width: float
     flange_thickness: float
     web_thickness: float
     corner_radius: float
 
+# Hollow steel section square
 @dataclass
-class PipeProperty(SectionProperty):
+class HSSSProperty(SectionProperty):
+    depth: float 
+    width: float
+    flange_thickness: float
+    web_thickness: float
+    corner_radius: float
+
+# hollow steel section round
+@dataclass
+class HSSRProperty(SectionProperty):
     diameter: float
     thickness: float
 
 @dataclass
 class AngleProperty(SectionProperty):
-    pass
+    long_leg: float
+    short_leg: float
+    long_thickness: float
+    short_thickness: float
+    fillet_radius: float
 
+@dataclass
+class DoubleAngleProperty(SectionProperty):
+    total_depth: float
+    single_width: float
+    horizontal_thickness: float
+    vertical_thickness: float
+    back_distance: float
+    fillet_radius: float
 
 @dataclass
 class FrameMember:

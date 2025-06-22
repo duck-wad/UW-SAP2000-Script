@@ -1,6 +1,4 @@
-from generate_geometry import *
-from define_model_classes import *
-from load_properties import *
+from define_model_classes import FrameMember
 
 # create the frame member objects defined in define_model_classes based on geometry from generate_geometry
 # return a list of frame member objects 
@@ -13,7 +11,6 @@ def create_members(name, nodes, section, coordinate_system='Global', restraints=
         raise ValueError("Restraints should be same length as number of nodes")
     if releases is not None and len(restraints) != len(nodes):
         raise ValueError("Releases should be same length as number of nodes")
-    print("Hello World")
     for i in range(len(nodes)-1):         
         # pass in args as dictionary to FrameMember() to dynamically check for restraints/releases=None  
         args = {
@@ -34,4 +31,3 @@ def create_members(name, nodes, section, coordinate_system='Global', restraints=
         member_list.append(FrameMember(**args))
 
     return member_list
-print("hello")
