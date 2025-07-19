@@ -48,8 +48,8 @@ def generate_stringer_nodes(length, num_segments, y_pos, z_pos_top, depth,
     return top_chord_points, bottom_chord_points, web_points, vertical_web_points
 
 
-def generate_legs(east_or_west, x_pos, y_pos, z_pos_top, depth, web_divisions,
-                  outer_offset):
+def generate_leg_nodes(east_or_west, x_pos, y_pos, z_pos_top, depth,
+                       web_divisions, outer_offset):
 
     # determine the direction to offset the outer leg chord
     # for west, outer leg further west (in negative direction), if east it goes in positive direction
@@ -62,11 +62,13 @@ def generate_legs(east_or_west, x_pos, y_pos, z_pos_top, depth, web_divisions,
             f'Invalid value for east_or_west argument. Expected either \'east\' or \'west\''
         )
 
-    leg_chord_points = []
+    # return separate lists with the inner post and outer post coordinates
+    inner_leg_points = []
+    outer_leg_points = []
     web_points = []
 
-    leg_chord_points.append(((x_pos, y_pos, z_pos_top), (x_pos, y_pos, 0.0)))
-    leg_chord_points.append(
+    inner_leg_points.append(((x_pos, y_pos, z_pos_top), (x_pos, y_pos, 0.0)))
+    outer_leg_points.append(
         ((x_pos + out_dir * depth, y_pos, z_pos_top - outer_offset),
          (x_pos + out_dir * depth, y_pos, 0.0)))
 
@@ -88,11 +90,11 @@ def generate_legs(east_or_west, x_pos, y_pos, z_pos_top, depth, web_divisions,
     web_points.append(((x_pos + out_dir * depth, y_pos,
                         z_pos_top - outer_offset), (x_pos, y_pos, z_pos_top)))
 
-    return leg_chord_points, web_points
+    return inner_leg_points, outer_leg_points, web_points
 
 
-def generate_moment_frame(width, x_pos, z_pos_top, depth, web_divisions,
-                          web_offset):
+def generate_moment_frame_nodes(width, x_pos, z_pos_top, depth, web_divisions,
+                                web_offset):
 
     moment_chord_points = []
     web_points = []
